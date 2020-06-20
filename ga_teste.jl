@@ -11,9 +11,10 @@ Start_date = "2020-06-10"
 End_date = "2020-06-19"
 metrics = ["sessions","users"]
 Dimensions = ["date", "source", "medium"]
+creds = JSONCredentials("credentials.json")
 
 function ga_extract(id,Start_date,End_date,metrics,Dimensions)
-    creds = JSONCredentials("credentials.json")
+
     session = GoogleSession(creds, ["analytics.readonly"])
     auth = authorize(session)
     headers = Dict{String, String}(
