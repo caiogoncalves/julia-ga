@@ -6,7 +6,7 @@ using DataFrames
 using JSONTables
 using Dates
 
-id = "148386669"
+id = ""
 Start_date = "2020-06-10"
 End_date = "2020-06-19"
 metrics = ["sessions","users"]
