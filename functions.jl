@@ -1,8 +1,12 @@
-function ga_extract(id,Start_date,End_date,metrics,Dimensions)
-
+function ga_session(session)
     auth = authorize(session)
     headers = Dict{String, String}(
         "Authorization" => "$(auth[:token_type]) $(auth[:access_token])" )
+end
+
+function ga_extract(session,id,Start_date,End_date,metrics,Dimensions)
+
+    headers = session
 
     url = "https://www.googleapis.com/analytics/v3/management/accounts/"
 
@@ -26,11 +30,32 @@ function ga_extract(id,Start_date,End_date,metrics,Dimensions)
     df = DataFrame()
 
     for i in coltabela
-        df[Symbol(i)] = []
+        df[!, Symbol(i)] = []
     end
 
     for i in tabela
         push!(df, i)
     end
     return(df)
+end
+
+function Sheet_GET_data(headers, sheet_id, sheet_range)
+    url = "https://sheets.googleapis.com/v4/spreadsheets/"*sheet_id*"/values/"*sheet_range
+
+    requisicao_sheet = HTTP.request("GET", url, cabecalho)
+
+    sheet = String(requisicao_sheet.body)
+    tabela = JSON3.read(sheet)
+    tabela = tabela.values
+
+    df = DataFrame()
+
+    for i in tabela[1]
+        df[!, Symbol(i)] = []
+    end
+
+    for i in 2:length(tabela)
+        push!(df, teste[i])
+    end
+    return df
 end
