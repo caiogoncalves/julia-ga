@@ -55,7 +55,7 @@ function Sheet_GET_data(headers, sheet_id, sheet_range)
     end
 
     for i in 2:length(tabela)
-        push!(df, teste[i])
+        push!(df, tabela[i])
     end
     return df
 end
